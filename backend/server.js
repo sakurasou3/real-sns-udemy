@@ -19,8 +19,4 @@ app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/posts', postRoutes)
 
-app.get('/', (req, res) => {
-  res.send('hello world')
-})
-
 app.listen(PORT, () => console.log('start server'))
