@@ -1,0 +1,69 @@
+.sidebar {
+  /* homecontainerから2.5の幅をとる */
+  flex: 2.5;
+  height: 100vh;
+}
+
+.sidebarWrapper {
+  padding: 20px;
+}
+
+.sidebarList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sidebarListItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 4px 6px;
+  cursor: pointer;
+  /* ジェネレータを使用：https://hiroyuki-n.github.io/boxShadow_generator/ */
+  box-shadow: 3px 5px 9px -5px #696e91;
+  border-radius: 10px;
+  /* アニメーションぬるぬる対応 */
+  transition: all 0.3s;
+}
+
+.sidebarListItem:hover {
+  box-shadow: none;
+  /* 下(Y方向)に沈み込むようなアニメーションにする */
+  transform: translateY(5px);
+}
+
+.sidebarIcon {
+  font-size: 35px !important;
+  margin-right: 10px;
+}
+
+.sidebarListItemText {
+  font-size: 20px;
+  /* アイコンの真ん中にくるよう微調整 */
+  padding-top: 3px;
+}
+
+.sidebarHr {
+  margin: 20px 0;
+}
+
+.sidebarFriendImg {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.sidebarFriendList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebarFriend {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
