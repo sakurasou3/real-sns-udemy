@@ -3,7 +3,7 @@ const app = express()
 const userRoutes = require('./routes/users')
 const authRoutes = require('./routes/auth')
 const postRoutes = require('./routes/posts')
-const PORT = 3000
+const PORT = 8000
 const mongoose = require('mongoose')
 require('dotenv').config()
 

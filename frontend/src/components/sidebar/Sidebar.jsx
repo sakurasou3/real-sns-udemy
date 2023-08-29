@@ -11,16 +11,19 @@ import {
   Settings,
 } from "@mui/icons-material";
 import { CloseFriend } from "../closeFriend/CloseFriend";
+import { Link } from "react-router-dom";
 
 export const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <ul className="sidebarList">
-          <li className="sidebarListItem">
-            <Home className="sidebarIcon" />
-            <span className="sidebarListItemText">ホーム</span>
-          </li>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <li className="sidebarListItem">
+              <Home className="sidebarIcon" />
+              <span className="sidebarListItemText">ホーム</span>
+            </li>
+          </Link>
           <li className="sidebarListItem">
             <Search className="sidebarIcon" />
             <span className="sidebarListItemText">検索</span>
@@ -37,10 +40,15 @@ export const Sidebar = () => {
             <Bookmark className="sidebarIcon" />
             <span className="sidebarListItemText">ブックマーク</span>
           </li>
-          <li className="sidebarListItem">
-            <Person className="sidebarIcon" />
-            <span className="sidebarListItemText">プロフィール</span>
-          </li>
+          <Link
+            to="/profile/test"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <li className="sidebarListItem">
+              <Person className="sidebarIcon" />
+              <span className="sidebarListItemText">プロフィール</span>
+            </li> 
+          </Link>
           <li className="sidebarListItem">
             <Settings className="sidebarIcon" />
             <span className="sidebarListItemText">設定</span>

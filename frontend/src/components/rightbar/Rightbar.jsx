@@ -42,6 +42,7 @@ export const Rightbar = ({ profile }) => {
   );
 
   const ProfileRightbar = () => {
+    const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
     return (
       <>
         <h4 className="rightbarTitle">ユーザー情報</h4>
@@ -53,9 +54,9 @@ export const Rightbar = ({ profile }) => {
           <h4 className="rightbarTitle">あなたの友達</h4>
           <div className="rightbarFollowings">
             {Users.map((user) => (
-              <div className="rightbarFollowing">
+              <div className="rightbarFollowing" key={user.id}>
                 <img
-                  src={user.profilePicture}
+                  src={`${PUBLIC_FOLDER}${user.profilePicture}`}
                   alt=""
                   className="rightbarFollowingImg"
                 />
