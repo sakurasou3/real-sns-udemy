@@ -99,10 +99,10 @@ router.put('/:id/like', async (req, res) => {
 // /timelineとしてしまうと、Get Postの:idがtimelineとして認識されてしまう。
 // これを避けるために、/timelineに/allをつけることで、
 // 別のエンドポイントであることを宣言する
-router.get('/timeline/all', async (req, res) => {
+router.get('/timeline/:userId', async (req, res) => {
   try {
     // 自分の投稿内容を取得
-    const user = await User.findById(req.body.userId)
+    const user = await User.findById(req.params.userId)
     const userPosts = await Post.find({ userId: user._id })
 
     // フォロワーの投稿内容を取得
@@ -110,8 +110,12 @@ router.get('/timeline/all', async (req, res) => {
       user.followings.map(followId => Post.find({ userId: followId })),
     )
 
-    // 自分とフォロワーの投稿を結合して返す
-    return res.status(200).json([...userPosts, ...followersPosts])
+    // 自分とフォロワーの投稿を結合、投稿日の降順リストを生成して返す
+    const response = [...userPosts, ...followersPosts.flat()].sort(
+      (a, b) => b.createdAt - a.createdAt,
+    )
+
+    return res.status(200).json(response)
   } catch (err) {
     return res.status(500).json(err)
   }

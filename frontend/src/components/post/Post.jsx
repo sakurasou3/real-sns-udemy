@@ -1,18 +1,27 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import "./Post.css";
 import { MoreVert } from "@mui/icons-material";
-import { Users } from "../../dummyData";
+import { getUser } from "../../api/user";
+import { format } from "timeago.js";
 
 export const Post = ({ post }) => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const user = Users.find((u) => u.id === post.userId);
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes?.length ?? 0);
   const [isLiked, setIsLiked] = useState(false);
   const handleLikeClick = useCallback(() => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   }, [isLiked, like]);
+
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await getUser(post.userId);
+      setUser(response);
+    };
+    fetchUser();
+  }, [post.userId]);
 
   return (
     <div className="post">
@@ -20,12 +29,15 @@ export const Post = ({ post }) => {
         <div className="postTop">
           <div className="postTopLeft">
             <img
-              src={`${PUBLIC_FOLDER}${user.profilePicture}`}
+              src={
+                user.profilePicture || `${PUBLIC_FOLDER}/person/noAvatar.png`
+              }
               alt=""
               className="postProfileImg"
             />
             <span className="postUsername">{user.username}</span>
-            <span className="postDate">{post.date}</span>
+            {/* timeago.jsを使ってxx分前などの表示にする */}
+            <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
@@ -33,7 +45,7 @@ export const Post = ({ post }) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post.desc}</span>
-          <img src={`${PUBLIC_FOLDER}${post.photo}`} alt="" className="postImg" />
+          <img src={`${PUBLIC_FOLDER}${post.img}`} alt="" className="postImg" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
