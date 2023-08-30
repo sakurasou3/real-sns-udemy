@@ -3,6 +3,7 @@ import "./Post.css";
 import { MoreVert } from "@mui/icons-material";
 import { getUser } from "../../api/user";
 import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 
 export const Post = ({ post }) => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -28,13 +29,15 @@ export const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img
-              src={
-                user.profilePicture || `${PUBLIC_FOLDER}/person/noAvatar.png`
-              }
-              alt=""
-              className="postProfileImg"
-            />
+            <Link to={`/profile/${user._id}`}>
+              <img
+                src={`${PUBLIC_FOLDER}${
+                  user.profilePicture || "/person/noAvatar.png"
+                }`}
+                alt=""
+                className="postProfileImg"
+              />
+            </Link>
             <span className="postUsername">{user.username}</span>
             {/* timeago.jsを使ってxx分前などの表示にする */}
             <span className="postDate">{format(post.createdAt)}</span>

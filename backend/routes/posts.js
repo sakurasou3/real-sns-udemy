@@ -121,4 +121,19 @@ router.get('/timeline/:userId', async (req, res) => {
   }
 })
 
+// Get Timeline (Posts List of Profile)
+router.get('/profile/:userId', async (req, res) => {
+  try {
+    // 自分の投稿内容を取得
+    const user = await User.findById(req.params.userId)
+    const posts = await Post.find({ userId: user._id })
+
+    // 投稿日の降順リストを生成して返す
+    const response = posts.sort((a, b) => b.createdAt - a.createdAt)
+
+    return res.status(200).json(response)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+})
 module.exports = router

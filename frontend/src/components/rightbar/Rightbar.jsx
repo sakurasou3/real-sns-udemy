@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Rightbar.css";
 import { Users } from "../../dummyData";
 import { Online } from "../online/Online";
+import { getUser } from "../../api/user";
 
-export const Rightbar = ({ profile }) => {
+export const Rightbar = ({ user }) => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const getUserInfo = async () => {
+      if (user && user.followings && user.followings?.length > 0) {
+        const userInfo = await Promise.all(
+          user.followings.map((id) => getUser(id))
+        );
+        setUsers(userInfo);
+      }
+    };
+    getUserInfo();
+  }, [user]);
+
   const HomeRightBar = () => (
     <>
       <div className="eventContainer">
@@ -53,8 +67,8 @@ export const Rightbar = ({ profile }) => {
           </div>
           <h4 className="rightbarTitle">あなたの友達</h4>
           <div className="rightbarFollowings">
-            {Users.map((user) => (
-              <div className="rightbarFollowing" key={user.id}>
+            {users.map((user) => (
+              <div className="rightbarFollowing" key={user._id}>
                 <img
                   src={`${PUBLIC_FOLDER}${user.profilePicture}`}
                   alt=""
@@ -72,7 +86,7 @@ export const Rightbar = ({ profile }) => {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {profile ? <ProfileRightbar /> : <HomeRightBar />}
+        {user ? <ProfileRightbar /> : <HomeRightBar />}
       </div>
     </div>
   );
