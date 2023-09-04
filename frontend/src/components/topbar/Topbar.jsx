@@ -31,7 +31,9 @@ export const Topbar = () => {
             <Notifications className="" />
             <span className="topbarIconBadge">2</span>
           </div>
-          <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
+          <Link to="/login">
+            <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
+          </Link>
         </div>
       </div>
     </div>
