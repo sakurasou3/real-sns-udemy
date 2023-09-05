@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Rightbar.css";
 import { Users } from "../../dummyData";
 import { Online } from "../online/Online";
-import { getUser } from "../../api/user";
+import { getUser } from "../../api/users";
 
 export const Rightbar = ({ user }) => {
   const [users, setUsers] = useState([]);

@@ -5,7 +5,7 @@ import { Topbar } from "../../components/topbar/Topbar";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import { Timeline } from "../../components/timeline/Timeline";
 import { Rightbar } from "../../components/rightbar/Rightbar";
-import { getUser } from "../../api/user";
+import { getUser } from "../../api/users";
 import { useParams } from "react-router-dom";
 
 export const Profile = () => {

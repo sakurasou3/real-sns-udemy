@@ -1,19 +1,25 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import "./Post.css";
 import { MoreVert } from "@mui/icons-material";
-import { getUser } from "../../api/user";
+import { getUser } from "../../api/users";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { updateLike } from "../../api/posts";
+import { AuthContext } from "../../state/authContext";
 
 export const Post = ({ post }) => {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser } = useContext(AuthContext);
 
   const [like, setLike] = useState(post.likes?.length ?? 0);
   const [isLiked, setIsLiked] = useState(false);
-  const handleLikeClick = useCallback(() => {
+  const handleLikeClick = useCallback(async () => {
+    await updateLike(post._id, currentUser._id);
+
+    // 本当はもっとうまくやりたい。。。
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
-  }, [isLiked, like]);
+  }, [post._id, currentUser._id, isLiked, like]);
 
   const [user, setUser] = useState({});
   useEffect(() => {
