@@ -1,20 +1,8 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import { AuthReducer } from "./authReducer";
 
 const initialState = {
-  // TODO 後で修正
-  // user: null,
-  user: {
-    _id: "64df50c6cefda32195638a05",
-    username: "ねこ",
-    email: "eri@gmeil.com",
-    password: "adcdef",
-    profilePicture: "/person/1.jpeg",
-    caverPicture: "/post/1.jpeg",
-    followers: ["64e345f498516331a9736a9b"],
-    followings: ["64e345f498516331a9736a9b"],
-    isAdmin: false,
-  },
+  user: JSON.parse(localStorage.getItem("user")) || null,
   isRegister: false,
   isFetching: false,
   error: false,
@@ -28,6 +16,11 @@ export const AuthContext = createContext(initialState);
 // index.jsに定義することで、Appつまりアプリ全体からvalueの値が使えるようになる。
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(state.user));
+  }, [state.user]);
+
   return (
     <AuthContext.Provider
       value={{

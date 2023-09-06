@@ -3,8 +3,10 @@ const app = express()
 const userRoutes = require('./routes/users')
 const authRoutes = require('./routes/auth')
 const postRoutes = require('./routes/posts')
+const uploadRoutes = require('./routes/upload')
 const PORT = 7070
 const mongoose = require('mongoose')
+const path = require('path')
 require('dotenv').config()
 const cors = require('cors')
 
@@ -15,6 +17,8 @@ mongoose
   .catch(err => console.err(err))
 
 // ミドルウェア
+// 画像パスのアクセス時は、backendの静的パスを参照する
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
 app.use(express.json()) // JSON利用宣言
 // cors対応。
 // フロントからのアクセスのみcors対応を許可する。
@@ -29,5 +33,6 @@ app.use(
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/posts', postRoutes)
+app.use('/api/upload', uploadRoutes)
 
 app.listen(PORT, () => console.log('start server'))

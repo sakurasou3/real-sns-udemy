@@ -28,6 +28,11 @@ export const Register = () => {
     );
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
   useEffect(() => {
     if (validationError) {
       // HTML inputタグにカスタムメッセージを表示させる。
@@ -83,7 +88,9 @@ export const Register = () => {
             <button className="loginButton" type="submit">
               サインアップ
             </button>
-            <button className="loginRegisterButton">ログイン</button>
+            <button className="loginRegisterButton" onClick={handleLogin}>
+              ログイン
+            </button>
           </form>
         </div>
       </div>
